@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,5 +69,15 @@ public class CourseController {
           return ResponseEntity.ok().body(updated);
         })
         .orElse(ResponseEntity.notFound().build()); 
+  } 
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+    return courseRepository.findById(id)
+    .map(recordFound -> {
+      courseRepository.deleteById(id);
+      return ResponseEntity.noContent().<Void>build();
+    })
+    .orElse(ResponseEntity.notFound().build()); 
   }
 }
