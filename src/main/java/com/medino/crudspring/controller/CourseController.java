@@ -3,7 +3,6 @@ package com.medino.crudspring.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medino.crudspring.model.Course;
-import com.medino.crudspring.repository.CourseRepository;
 import com.medino.crudspring.service.CourseService;
 
 import jakarta.validation.Valid;
@@ -44,10 +43,8 @@ public class CourseController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Course> findById(@PathVariable("id") @NotNull @Positive Long id) {
-      return courseService.findById(id)
-        .map(recordFound -> ResponseEntity.ok().body(recordFound))
-        .orElse(ResponseEntity.notFound().build()); 
+  public Course findById(@PathVariable("id") @NotNull @Positive Long id) {
+    return courseService.findById(id);
   }
   
 
@@ -58,19 +55,13 @@ public class CourseController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Course> update (@PathVariable("id") @NotNull @Positive Long id, @RequestBody @Valid Course course){
-    return courseService.update(id, course)
-        .map(recordFound ->  ResponseEntity.ok().body(recordFound))
-        .orElse(ResponseEntity.notFound().build()); 
+  public Course update (@PathVariable("id") @NotNull @Positive Long id, @RequestBody @Valid Course course){
+    return courseService.update(id, course);
   } 
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete(@PathVariable("id") @NotNull @Positive Long id){
-    if(courseService.delete(id)){
-      return ResponseEntity.noContent().<Void>build();
-    }
-    else {
-      return ResponseEntity.notFound().build();
-    }  
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable("id") @NotNull @Positive Long id){
+    courseService.delete(id);  
   }
 }
