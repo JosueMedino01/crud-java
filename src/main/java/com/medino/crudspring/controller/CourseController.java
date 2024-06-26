@@ -2,7 +2,7 @@ package com.medino.crudspring.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.medino.crudspring.model.Course;
+import com.medino.crudspring.dto.CourseDTO;
 import com.medino.crudspring.service.CourseService;
 
 import jakarta.validation.Valid;
@@ -12,7 +12,6 @@ import jakarta.validation.constraints.Positive;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,24 +37,25 @@ public class CourseController {
   }
 
   @GetMapping
-  public List<Course> list(){
+  public List<CourseDTO> list(){
     return courseService.list();
   }
 
   @GetMapping("/{id}")
-  public Course findById(@PathVariable("id") @NotNull @Positive Long id) {
+  public CourseDTO findById(@PathVariable("id") @NotNull @Positive Long id) {
     return courseService.findById(id);
   }
   
 
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
-  public Course create(@RequestBody @Valid Course course){
+  public CourseDTO create(@RequestBody @Valid @NotNull CourseDTO course){
     return courseService.create(course);
   }
 
   @PutMapping("/{id}")
-  public Course update (@PathVariable("id") @NotNull @Positive Long id, @RequestBody @Valid Course course){
+  public CourseDTO update (@PathVariable("id") @NotNull @Positive Long id, 
+            @RequestBody @Valid CourseDTO course){
     return courseService.update(id, course);
   } 
 
