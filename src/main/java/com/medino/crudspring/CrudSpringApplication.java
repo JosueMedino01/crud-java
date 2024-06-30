@@ -25,12 +25,20 @@ public class CrudSpringApplication {
       Course c = new Course();
       c.setName("Angular com Srping");
       c.setCategory(Category.FRONTEND);
+
       Lesson lesson = new Lesson();
 
       lesson.setName("Introdução a py");
       lesson.setYoutubeURL("youtube");
       lesson.setCourse(c);
       c.getLessons().add(lesson);
+
+      Lesson lesson2 = new Lesson();
+
+      lesson2.setName("Introdução a JAVA");
+      lesson2.setYoutubeURL("AVAJ");
+      lesson2.setCourse(c);
+      c.getLessons().add(lesson2);
 
       courseRepository.save(c);
     };

@@ -9,7 +9,7 @@ import com.medino.crudspring.model.Course;
 @Component
 public class CourseMapper {
     public CourseDTO toDTO (Course course){
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue());
+        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(), course.getLessons());
     }
 
     public Course toEntity(CourseDTO courseDTO){
