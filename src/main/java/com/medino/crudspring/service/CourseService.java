@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.medino.crudspring.dto.CourseDTO;
 import com.medino.crudspring.dto.mapper.CourseMapper;
+import com.medino.crudspring.enums.Category;
 import com.medino.crudspring.exception.RecordNotFoundExeption;
 import com.medino.crudspring.repository.CourseRepository;
 
@@ -45,7 +46,7 @@ public class CourseService {
         return courseRepository.findById(id)
             .map(recordFound -> {
                 recordFound.setName(course.name());
-                recordFound.setCategory(course.category());
+                recordFound.setCategory(Category.FRONTEND);
                 return courseMapper.toDTO(courseRepository.save(recordFound));
             }).orElseThrow(() -> new RecordNotFoundExeption(id));
     } 
