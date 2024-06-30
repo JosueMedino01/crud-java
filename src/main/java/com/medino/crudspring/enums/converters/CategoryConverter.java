@@ -1,4 +1,4 @@
-package com.medino.crudspring.enums.CategoryConverter;
+package com.medino.crudspring.enums.converters;
 
 import com.medino.crudspring.enums.Category;
 
