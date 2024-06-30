@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.medino.crudspring.enums.Category;
 import com.medino.crudspring.model.Course;
+import com.medino.crudspring.model.Lesson;
 import com.medino.crudspring.repository.CourseRepository;
 
 @SpringBootApplication
@@ -24,6 +25,12 @@ public class CrudSpringApplication {
       Course c = new Course();
       c.setName("Angular com Srping");
       c.setCategory(Category.FRONTEND);
+      Lesson lesson = new Lesson();
+
+      lesson.setName("Introdução a py");
+      lesson.setYoutubeURL("youtube");
+      lesson.setCourse(c);
+      c.getLessons().add(lesson);
 
       courseRepository.save(c);
     };
