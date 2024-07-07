@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.medino.crudspring.dto.CourseDTO;
 import com.medino.crudspring.dto.mapper.CourseMapper;
 import com.medino.crudspring.exception.RecordNotFoundExeption;
+import com.medino.crudspring.model.Course;
 import com.medino.crudspring.repository.CourseRepository;
 
 import jakarta.validation.Valid;
@@ -40,11 +41,17 @@ public class CourseService {
         return courseMapper.toDTO(courseRepository.save(courseMapper.toEntity(course)));
     }
 
-    public CourseDTO update (@NotNull @Positive Long id, @RequestBody @Valid @NotNull CourseDTO course){
+    public CourseDTO update (@NotNull @Positive Long id, @RequestBody @Valid @NotNull CourseDTO courseDTO){
         return courseRepository.findById(id)
             .map(recordFound -> {
-                recordFound.setName(course.name());
-                recordFound.setCategory(courseMapper.convertCategoryValue(course.category()));
+                Course course =courseMapper.toEntity(courseDTO);
+                recordFound.setName(courseDTO.name());
+                recordFound.setCategory(courseMapper.convertCategoryValue(courseDTO.category()));
+                
+                recordFound.getLessons().clear();
+
+                course.getLessons().forEach(lesson ->recordFound.getLessons().add(lesson));
+
                 return courseMapper.toDTO(courseRepository.save(recordFound));
             }).orElseThrow(() -> new RecordNotFoundExeption(id));
     } 
